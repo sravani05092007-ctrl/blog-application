@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MyBlog - Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+
+            <h1 class="logo">MyBlog</h1>
+
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="create-blog.html">Create Blog</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="login.html">Logout</a>
+            </div>
+
+        </nav>
+    </header>
+
+
+    <!-- Dashboard -->
+    <main>
+
+        <section class="dashboard">
+
+            <h2>MyBlog Dashboard</h2>
+
+            <p id="welcomeMessage"></p>
+
+            <br>
+
+            <a href="create-blog.html" class="btn">
+                + Create New Blog
+            </a>
+
+
+            <h2 style="margin-top: 40px;">
+                My Blogs
+            </h2>
+
+
+            <!-- Blogs will appear here -->
+            <div id="myBlogs"></div>
+
+        </section>
+
+    </main>
+
+
+    <!-- JavaScript -->
+    <script>
+
+        // Display user's name
+        const name = localStorage.getItem("name");
+
+        const welcomeMessage =
+            document.getElementById("welcomeMessage");
+
+        if (name) {
+            welcomeMessage.innerText =
+                "Welcome, " + name + "! 👋";
+        } else {
+            welcomeMessage.innerText =
+                "Welcome to your dashboard!";
+        }
+
+
+        // Get blogs from localStorage
+        const blogs =
+            JSON.parse(localStorage.getItem("blogs")) || [];
+
+        const myBlogs =
+            document.getElementById("myBlogs");
+
+
+        // Check whether blogs exist
+        if (blogs.length === 0) {
+
+            myBlogs.innerHTML = `
+                <div class="blog-card">
+                    <h3>No blogs yet</h3>
+                    <p>
+                        You haven't created any blogs.
+                        Click "Create New Blog" to get started.
+                    </p>
+                </div>
+            `;
+
+        } else {
+
+            // Display every blog
+            blogs.forEach(function(blog) {
+
+                const blogCard =
+                    document.createElement("div");
+
+                blogCard.className = "blog-card";
+
+
+                blogCard.innerHTML = `
+                    <h3>${blog.title}</h3>
+
+                    <p>${blog.content}</p>
+                `;
+
+
+                myBlogs.appendChild(blogCard);
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>
